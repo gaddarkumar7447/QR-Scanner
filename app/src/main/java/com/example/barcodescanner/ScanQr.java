@@ -3,6 +3,9 @@ package com.example.barcodescanner;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
 
 public class ScanQr extends AppCompatActivity {
     Button mscan_bn, mcopy_bn;
@@ -32,7 +36,7 @@ public class ScanQr extends AppCompatActivity {
             public void onClick(View v) {
                 flag = 1;
                 IntentIntegrator intentIntegrator = new IntentIntegrator(ScanQr.this);
-                intentIntegrator.setPrompt("for flash use valume up");
+                intentIntegrator.setPrompt("for flash, use value up");
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
@@ -40,8 +44,31 @@ public class ScanQr extends AppCompatActivity {
             }
         });
 
+        mcopy_bn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flag==1) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("EditText", mscanned_text_tv.getText().toString());
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(ScanQr.this, "Copied!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
+        mscanned_text_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (flag==1) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("EditText", mscanned_text_tv.getText().toString());
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(ScanQr.this, "Copied!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
