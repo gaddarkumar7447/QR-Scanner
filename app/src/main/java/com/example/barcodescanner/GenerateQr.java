@@ -1,8 +1,13 @@
 package com.example.barcodescanner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -35,14 +40,12 @@ public class GenerateQr extends AppCompatActivity {
         moutput_iv = findViewById(R.id.output_iv);
         msave_gallery_bn = findViewById(R.id.save_gallery_bn);
 
-
         mgenerate_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String str = minput_et.getText().toString().trim();
                 if (str.isEmpty()){
                     minput_et.setError("Con't generate empty qr code");
-                    //Toast.makeText(GenerateQr.this, "Con't generate empty qr code", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     flag = 1;
@@ -60,6 +63,38 @@ public class GenerateQr extends AppCompatActivity {
                 }
             }
         });
+        msave_gallery_bn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ContextCompat.checkSelfPermission(GenerateQr.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    if(flag==1) {
+                        //saveImage();
+                        Toast.makeText(GenerateQr.this, "saved", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    askPermission();
+                }
+            }
+        });
 
+    }
+    private void askPermission() {
+        ActivityCompat.requestPermissions(GenerateQr.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},100);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 100){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (flag == 1){
+                    //saveImage();
+                }
+            }
+            else {
+                Toast.makeText(this, "Please provide the request permission", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

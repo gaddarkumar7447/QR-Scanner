@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 
@@ -56,7 +57,7 @@ public class ScanQr extends AppCompatActivity {
             }
         });
 
-        mscanned_text_tv.setOnClickListener(new View.OnClickListener() {
+        /*mscanned_text_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (flag==1) {
@@ -66,7 +67,7 @@ public class ScanQr extends AppCompatActivity {
                     Toast.makeText(ScanQr.this, "Copied!", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
     }
 
 
@@ -74,11 +75,10 @@ public class ScanQr extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-
         if(intentResult.getContents() != null) {
             mscanned_text_tv.setText(intentResult.getContents());
         } else {
-            Toast.makeText(this, "OOPS....You didn't scan anything", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "something went to wong", Toast.LENGTH_SHORT).show();
         }
     }
 }
