@@ -63,14 +63,14 @@ public class GenerateQr extends AppCompatActivity {
                 }
             }
         });
+
         msave_gallery_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ContextCompat.checkSelfPermission(GenerateQr.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_GRANTED) {
+                if(ContextCompat.checkSelfPermission(GenerateQr.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     if(flag==1) {
-                        //saveImage();
-                        Toast.makeText(GenerateQr.this, "saved", Toast.LENGTH_SHORT).show();
+                        saveImage();
+                       // Toast.makeText(GenerateQr.this, "saved", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     askPermission();
@@ -88,7 +88,7 @@ public class GenerateQr extends AppCompatActivity {
         if (requestCode == 100){
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 if (flag == 1){
-                    //saveImage();
+                    saveImage();
                 }
             }
             else {
@@ -97,4 +97,8 @@ public class GenerateQr extends AppCompatActivity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+    public void saveImage(){
+        Toast.makeText(this, "Image is saved", Toast.LENGTH_SHORT).show();
+    }
+
 }

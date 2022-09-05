@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f9f9f9"
+    android:background="#EDA5A5"
     tools:context=".MainActivity">
 
     <TextView
@@ -28,6 +28,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:textAlignment="center"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg"
         android:layout_below="@+id/accelerate"
         android:layout_height="250dp">
 
@@ -35,9 +38,9 @@
             android:layout_width="match_parent"
             android:text="Generate QR code"
             android:textAlignment="center"
+            android:layout_marginTop="78dp"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:background="#D179D1"
             android:layout_height="match_parent"/>
     </LinearLayout>
 
@@ -49,16 +52,17 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:orientation="vertical"
+        android:background="@drawable/bg"
         android:layout_below="@+id/generateQR"
         android:layout_height="250dp">
 
         <TextView
             android:layout_width="match_parent"
             android:text="Scan QR code"
+            android:layout_marginTop="78dp"
             android:textAlignment="center"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:background="#D179D1"
             android:layout_height="match_parent"/>
     </LinearLayout>
 

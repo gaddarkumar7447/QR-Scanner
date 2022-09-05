@@ -7,15 +7,21 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.client.android.Intents;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.ScanOptions;
+
+import java.io.File;
 
 
 public class ScanQr extends AppCompatActivity {
@@ -32,16 +38,24 @@ public class ScanQr extends AppCompatActivity {
         mcopy_bn = findViewById(R.id.copy_bn);
         mscanned_text_tv = findViewById(R.id.scanned_text_tv);
 
+
         mscan_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flag = 1;
-                IntentIntegrator intentIntegrator = new IntentIntegrator(ScanQr.this);
-                intentIntegrator.setPrompt("for flash, use value up");
+                new com.google.zxing.integration.android.IntentIntegrator(ScanQr.this).initiateScan();
+
+                /*new com.google.zxing.integration.android.IntentIntegrator(ScanQr.this).setOrientationLocked(false);
+                new com.google.zxing.integration.android.IntentIntegrator(ScanQr.this).setCaptureActivity(Capture.class);
+                new com.google.zxing.integration.android.IntentIntegrator(ScanQr.this).setBeepEnabled(true);
+                new com.google.zxing.integration.android.IntentIntegrator(ScanQr.this).setPrompt("Scanning");*/
+
+                //IntentIntegrator intentIntegrator = new IntentIntegrator(ScanQr.this);
+                /*intentIntegrator.setPrompt("for flash, use value up");
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
-                intentIntegrator.initiateScan();
+                intentIntegrator.initiateScan();*/
             }
         });
 
@@ -57,7 +71,7 @@ public class ScanQr extends AppCompatActivity {
             }
         });
 
-        /*mscanned_text_tv.setOnClickListener(new View.OnClickListener() {
+        mscanned_text_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (flag==1) {
@@ -67,7 +81,7 @@ public class ScanQr extends AppCompatActivity {
                     Toast.makeText(ScanQr.this, "Copied!", Toast.LENGTH_SHORT).show();
                 }
             }
-        });*/
+        });
     }
 
 
@@ -81,4 +95,7 @@ public class ScanQr extends AppCompatActivity {
             Toast.makeText(this, "something went to wong", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 }
