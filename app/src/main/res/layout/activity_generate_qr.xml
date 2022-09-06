@@ -76,11 +76,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/output_iv"
         android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/button_bg"
         android:backgroundTint="#3CB371"
         android:fontFamily="sans-serif-medium"
-        android:text="Save to Gallery"
+        android:text="Share image"
         android:textAllCaps="false" />
 
 

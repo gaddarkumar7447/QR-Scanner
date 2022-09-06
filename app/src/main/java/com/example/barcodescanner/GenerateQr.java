@@ -1,15 +1,15 @@
 package com.example.barcodescanner;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -35,6 +35,7 @@ public class GenerateQr extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_qr);
+        getWindow().setStatusBarColor(ContextCompat.getColor(GenerateQr.this,R.color.black));
         minput_et = findViewById(R.id.input_et);
         mgenerate_bn = findViewById(R.id.generate_bn);
         moutput_iv = findViewById(R.id.output_iv);
@@ -45,7 +46,7 @@ public class GenerateQr extends AppCompatActivity {
             public void onClick(View v) {
                 String str = minput_et.getText().toString().trim();
                 if (str.isEmpty()){
-                    minput_et.setError("Con't generate empty qr code");
+                    minput_et.setError("Can't generate empty qr code");
                 }
                 else{
                     flag = 1;
@@ -67,6 +68,26 @@ public class GenerateQr extends AppCompatActivity {
         msave_gallery_bn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (flag == 1){
+                    BitmapDrawable drawable = (BitmapDrawable) moutput_iv.getDrawable();
+                    Bitmap bitmap = drawable.getBitmap();
+                    String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "QR code", "share QR code");
+                    Uri bitmapUri = Uri.parse(bitmapPath);
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(GenerateQr.this, "Generate image first", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        /*msave_gallery_bn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if(ContextCompat.checkSelfPermission(GenerateQr.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     if(flag==1) {
                         saveImage();
@@ -76,14 +97,14 @@ public class GenerateQr extends AppCompatActivity {
                     askPermission();
                 }
             }
-        });
+        });*/
 
     }
-    private void askPermission() {
+    /*private void askPermission() {
         ActivityCompat.requestPermissions(GenerateQr.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},100);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 100){
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -96,9 +117,9 @@ public class GenerateQr extends AppCompatActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-    public void saveImage(){
+    }*/
+    /*public void saveImage(){
         Toast.makeText(this, "Image is saved", Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
 }
